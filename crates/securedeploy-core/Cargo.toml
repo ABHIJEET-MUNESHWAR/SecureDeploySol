@@ -1,0 +1,20 @@
+[package]
+name = "securedeploy-core"
+description = "Domain core for the deployment-security service: proposal & finding records, ports (stores + event sink), and the generic AuditEngine that mirrors on-chain governance."
+version = { workspace = true }
+edition = { workspace = true }
+rust-version = { workspace = true }
+license = { workspace = true }
+
+[dependencies]
+securedeploy-types = { workspace = true }
+securedeploy-resilience = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+parking_lot = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }

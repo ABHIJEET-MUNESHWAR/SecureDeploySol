@@ -1,0 +1,27 @@
+[package]
+name = "securedeploy-infra"
+description = "Infrastructure adapters: in-memory stores (DashMap), broadcast event sink, and an optional Postgres proposal store."
+version = { workspace = true }
+edition = { workspace = true }
+rust-version = { workspace = true }
+license = { workspace = true }
+
+[features]
+default = []
+postgres = ["dep:sqlx"]
+
+[dependencies]
+securedeploy-types = { workspace = true }
+securedeploy-core = { workspace = true }
+async-trait = { workspace = true }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+dashmap = { workspace = true }
+parking_lot = { workspace = true }
+tracing = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+sqlx = { workspace = true, optional = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }

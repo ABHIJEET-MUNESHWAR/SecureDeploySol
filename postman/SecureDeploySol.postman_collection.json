@@ -1,0 +1,118 @@
+{
+  "info": {
+    "name": "SecureDeploySol",
+    "description": "GraphQL API for the SecureDeploySol deployment-security audit service. Set {{baseUrl}} (default http://localhost:8080).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"query { health }\"}" }
+      }
+    },
+    {
+      "name": "Config",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"query { config { authority guardians threshold timelockSeconds paused proposalCount } }\"}" }
+      }
+    },
+    {
+      "name": "Propose Upgrade",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"mutation($i: ProposeInput!) { proposeUpgrade(input: $i) { id status eta buildHash } }\",\"variables\":{\"i\":{\"programId\":\"Prog1111111111111111111111111111111111111\",\"buildHash\":\"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08\",\"proposer\":\"g1\"}}}" }
+      }
+    },
+    {
+      "name": "Approve Upgrade",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"mutation { approveUpgrade(id: 0, guardian: \\\"g1\\\") { approvals status } }\"}" }
+      }
+    },
+    {
+      "name": "Execute Upgrade",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"mutation { executeUpgrade(id: 0) { status } }\"}" }
+      }
+    },
+    {
+      "name": "Cancel Proposal",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"mutation { cancelProposal(id: 0) { status } }\"}" }
+      }
+    },
+    {
+      "name": "List Proposals",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"query { proposals { id programId approvals threshold status } }\"}" }
+      }
+    },
+    {
+      "name": "Raise Finding",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"mutation($i: FindingInput!) { raiseFinding(input: $i) { id threatCode severity } }\",\"variables\":{\"i\":{\"id\":\"F-1\",\"programId\":\"Prog1111111111111111111111111111111111111\",\"threat\":\"MISSING_SIGNER_CHECK\",\"severity\":\"HIGH\",\"title\":\"missing signer check on admin ix\"}}}" }
+      }
+    },
+    {
+      "name": "List Findings",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"query { findings { id threatCode severity resolved } }\"}" }
+      }
+    },
+    {
+      "name": "Stats",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"query { stats { proposals executed findings openFindings } }\"}" }
+      }
+    },
+    {
+      "name": "Set Paused",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/graphql", "host": ["{{baseUrl}}"], "path": ["graphql"] },
+        "body": { "mode": "raw", "raw": "{\"query\":\"mutation { setPaused(paused: true) }\"}" }
+      }
+    },
+    {
+      "name": "Metrics",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{baseUrl}}/metrics", "host": ["{{baseUrl}}"], "path": ["metrics"] }
+      }
+    }
+  ]
+}

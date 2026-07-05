@@ -1,0 +1,23 @@
+[package]
+name = "securedeploy-api"
+description = "async-graphql schema (queries, mutations, subscriptions) exposing the deployment-security audit engine over HTTP."
+version = { workspace = true }
+edition = { workspace = true }
+rust-version = { workspace = true }
+license = { workspace = true }
+
+[dependencies]
+securedeploy-types = { workspace = true }
+securedeploy-core = { workspace = true }
+securedeploy-infra = { workspace = true }
+securedeploy-resilience = { workspace = true }
+async-graphql = { workspace = true }
+async-graphql-axum = { workspace = true }
+axum = { workspace = true }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+futures = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }

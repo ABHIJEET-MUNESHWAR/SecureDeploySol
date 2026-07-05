@@ -1,0 +1,21 @@
+[package]
+name = "securedeploy-types"
+description = "Pure, I/O-free domain types for the deployment-security service: newtypes, threat taxonomy, governance validation, and verifiable build-hash math. Mirrors the on-chain program."
+version = { workspace = true }
+edition = { workspace = true }
+rust-version = { workspace = true }
+license = { workspace = true }
+
+[dependencies]
+serde = { workspace = true }
+thiserror = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+criterion = { workspace = true }
+
+[[bench]]
+name = "build_hash"
+harness = false

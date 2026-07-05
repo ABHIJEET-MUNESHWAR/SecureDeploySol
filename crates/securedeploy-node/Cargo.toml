@@ -1,0 +1,33 @@
+[package]
+name = "securedeploy-node"
+description = "Composition root and binary for the SecureDeploySol off-chain audit service: config, telemetry, startup wiring, GraphQL server, and a demo command."
+version = { workspace = true }
+edition = { workspace = true }
+rust-version = { workspace = true }
+license = { workspace = true }
+
+[[bin]]
+name = "securedeploy-node"
+path = "src/main.rs"
+
+[dependencies]
+securedeploy-types = { workspace = true }
+securedeploy-core = { workspace = true }
+securedeploy-infra = { workspace = true }
+securedeploy-api = { workspace = true }
+securedeploy-resilience = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower-http = { workspace = true }
+clap = { workspace = true }
+dotenvy = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+metrics = { workspace = true }
+metrics-exporter-prometheus = { workspace = true }
+chrono = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+async-graphql = { workspace = true }

@@ -1,0 +1,48 @@
+# SecureDeploySol local stack: the audit node, Prometheus, and (optional) Postgres.
+#
+#   docker compose up node prometheus          # service + metrics
+#   docker compose --profile db up              # also start Postgres
+services:
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: securedeploy-node:local
+    command: ["serve"]
+    environment:
+      SD_BIND_ADDR: 0.0.0.0:8080
+      SD_THRESHOLD: "2"
+      SD_TIMELOCK: "86400"
+      SD_RATE_LIMIT_RPS: "100"
+      RUST_LOG: info
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "securedeploy-node", "--help"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - node
+
+  postgres:
+    image: postgres:16-alpine
+    profiles: ["db"]
+    environment:
+      POSTGRES_USER: securedeploy
+      POSTGRES_PASSWORD: securedeploy
+      POSTGRES_DB: securedeploy
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
